@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmed Shaikh Saleem | Portfolio</title>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(-45deg, #0d0b21, #210b2c, #0b212c, #1f0b21);
+            --glass-bg: rgba(255, 255, 255, 0.07);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --text-main: #ffffff;
+            --text-sub: #d1d1e0;
+            --accent-pink: #ff758c;
+            --accent-purple: #9d4edd;
+            --accent-cyan: #00f2fe;
+            --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        [data-theme="light"] {
+            --bg-gradient: linear-gradient(-45deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb);
+            --glass-bg: rgba(255, 255, 255, 0.55);
+            --glass-border: rgba(255, 255, 255, 0.7);
+            --text-main: #1e1e2f;
+            --text-sub: #3a3a4d;
+            --accent-pink: #e5989b;
+            --accent-purple: #7209b7;
+            --accent-cyan: #0072ff;
+            --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            background: var(--bg-gradient);
+            background-size: 400% 400%;
+            animation: uiverseMeshBg 12s ease infinite;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: color 0.4s ease;
+        }
+
+        @keyframes uiverseMeshBg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- Scroll Progress Bar --- */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-purple), var(--accent-cyan));
+            width: 0%;
+            z-index: 1001;
+            box-shadow: 0 0 12px var(--accent-cyan);
+        }
+
+        /* --- Glass Navigation Header --- */
+        header {
+            background: rgba(13, 11, 33, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 15px 40px;
+            position: sticky;
+            top: 0;
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav {
+            display: flex;
+            gap: 28px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 0.98rem;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 3px;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-cyan));
+            border-radius: 2px;
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-out;
+        }
+
+        nav a:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        /* --- Uiverse Toggle Switch --- */
+        .theme-switch {
+            position: relative;
+            display: inline-block;
+            width: 52px;
+            height: 28px;
+        }
+
+        .theme-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: .4s;
+            border-radius: 34px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        /* --- Hero Section & Animated Glowing Profile Ring (Larger Size) --- */
+        .hero {
+            text-align: center;
+            padding: 90px 20px 70px;
+            position: relative;
+        }
+
+        .profile-avatar-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .glowing-avatar-ring {
+            position: relative;
+            width: 235px;
+            height: 235px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, var(--accent-pink), var(--accent-purple), var(--accent-cyan), var(--accent-pink));
+            background-size: 300% 300%;
+            animation: ringGlowAnimation 4s linear infinite;
+            box-shadow: 0 0 35px rgba(0, 242, 254, 0.6), 0 0 50px rgba(255, 117, 140, 0.4);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        @keyframes ringGlowAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .glowing-avatar-ring:hover {
+            transform: scale(1.06) rotate(3deg);
+            box-shadow: 0 0 45px rgba(0, 242, 254, 0.9), 0 0 70px rgba(255, 117, 140, 0.7);
+        }
+
+        .profile-avatar {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.9);
+            background-color: var(--glass-bg);
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.8rem;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, #ffffff, var(--accent-pink), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: heroGlow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroGlow {
+            0% { filter: drop-shadow(0 0 15px rgba(255, 117, 140, 0.3)); }
+            100% { filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.5)); }
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--text-sub);
+            margin-bottom: 35px;
+        }
+
+        .uiverse-btn {
+            position: relative;
+            padding: 15px 38px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple), var(--accent-cyan));
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 10px 25px rgba(157, 78, 221, 0.4);
+            transition: all 0.4s ease;
+        }
+
+        .uiverse-btn:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(255, 117, 140, 0.7);
+        }
+
+        /* --- Section Layout & Cards --- */
+        section {
+            padding: 60px 20px;
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            color: var(--text-main);
+            display: inline-block;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            width: 70%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-cyan));
+            bottom: 0;
+            left: 15%;
+            border-radius: 4px;
+        }
+
+        .uiverse-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 38px;
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 30px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .uiverse-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0, 242, 254, 0.2);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        h3 {
+            color: var(--text-main);
+            font-size: 1.4rem;
+            margin-bottom: 18px;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        ul li {
+            margin-bottom: 16px;
+            padding-left: 28px;
+            position: relative;
+            color: var(--text-sub);
+        }
+
+        ul li strong {
+            color: var(--text-main);
+        }
+
+        ul li::before {
+            content: "✦";
+            color: var(--accent-cyan);
+            font-size: 1rem;
+            position: absolute;
+            left: 0;
+            top: 1px;
+        }
+
+        /* --- Education Timeline Diagram Styles --- */
+        .timeline-container {
+            position: relative;
+            padding: 20px 0;
+            margin-top: 15px;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 8px;
+            background: linear-gradient(180deg, var(--accent-pink), var(--accent-purple), var(--accent-cyan));
+            transform: translateX(-50%);
+            border-radius: 4px;
+            box-shadow: 0 0 10px var(--accent-cyan);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 35px 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .timeline-year {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 58px;
+            height: 58px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            border: 3px solid #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 0.95rem;
+            box-shadow: 0 0 15px var(--accent-purple);
+            z-index: 2;
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-item:hover .timeline-year {
+            transform: translateX(-50%) scale(1.15);
+            box-shadow: 0 0 25px var(--accent-cyan);
+        }
+
+        .timeline-content {
+            width: 45%;
+            position: relative;
+        }
+
+        .timeline-item.right .timeline-content {
+            margin-left: auto;
+            padding-left: 30px;
+            text-align: left;
+        }
+
+        .timeline-item.left .timeline-content {
+            margin-right: auto;
+            padding-right: 30px;
+            text-align: right;
+        }
+
+        .timeline-item.right .timeline-content::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 25px;
+            height: 2px;
+            background: var(--accent-cyan);
+        }
+
+        .timeline-item.right .timeline-content::after {
+            content: '';
+            position: absolute;
+            left: -4px;
+            top: calc(50% - 3px);
+            width: 8px;
+            height: 8px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-cyan);
+        }
+
+        .timeline-item.left .timeline-content::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            width: 25px;
+            height: 2px;
+            background: var(--accent-pink);
+        }
+
+        .timeline-item.left .timeline-content::after {
+            content: '';
+            position: absolute;
+            right: -4px;
+            top: calc(50% - 3px);
+            width: 8px;
+            height: 8px;
+            background: var(--accent-pink);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-pink);
+        }
+
+        .timeline-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--text-main);
+        }
+
+        .timeline-sub {
+            font-size: 0.9rem;
+            color: var(--text-sub);
+        }
+
+        /* --- Uiverse Skill Badges --- */
+        .skills-tag {
+            display: inline-block;
+            padding: 0.55em 1.25em;
+            margin: 0.35em;
+            border-radius: 30px;
+            background: rgba(0, 0, 0, 0.25);
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .skills-tag:hover {
+            background: var(--accent-cyan);
+            color: #000;
+            border-color: var(--accent-cyan);
+            transform: translateY(-3px) scale(1.08);
+            box-shadow: 0 0 15px var(--accent-cyan);
+        }
+
+        /* --- Contact Grid --- */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .interactive-contact-btn {
+            background: rgba(0, 0, 0, 0.25);
+            border: 2px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            color: var(--text-main);
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .interactive-contact-btn span {
+            display: block;
+            color: var(--accent-cyan);
+            font-size: 1.2rem;
+            margin-top: 8px;
+        }
+
+        .interactive-contact-btn:hover {
+            background: var(--glass-bg);
+            border-color: var(--accent-pink);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 117, 140, 0.3);
+        }
+
+        footer {
+            text-align: center;
+            padding: 35px;
+            background: rgba(0, 0, 0, 0.4);
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-sub);
+            font-size: 0.95rem;
+        }
+
+        @media(max-width: 768px) {
+            .grid-2, .contact-grid { grid-template-columns: 1fr; }
+            header { flex-direction: column; gap: 15px; }
+            .hero h1 { font-size: 2.6rem; }
+            
+            .glowing-avatar-ring { width: 175px; height: 175px; }
+            .profile-avatar { width: 160px; height: 160px; }
+
+            .timeline-container::before { left: 20px; }
+            .timeline-year { left: 20px; width: 45px; height: 45px; font-size: 0.8rem; }
+            .timeline-item.left .timeline-content,
+            .timeline-item.right .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 60px;
+                padding-left: 15px;
+                padding-right: 0;
+                text-align: left;
+            }
+            .timeline-item.left .timeline-content::before,
+            .timeline-item.right .timeline-content::before {
+                left: 0; right: auto; width: 15px;
+            }
+            .timeline-item.left .timeline-content::after,
+            .timeline-item.right .timeline-content::after {
+                left: -4px; right: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="scroll-progress"></div>
+
+    <header>
+        <nav>
+            <a href="#about">About Me</a>
+            <a href="#experience">Past Experience</a>
+            <a href="#achievements">Achievements & Skills</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        
+        <!-- Theme Toggle Switch -->
+        <label class="theme-switch">
+            <input type="checkbox" id="themeToggle">
+            <span class="slider"></span>
+        </label>
+    </header>
+
+    <div class="hero">
+        <!-- Profile Picture Image Container with Glowing Ring -->
+        <div class="profile-avatar-container">
+            <div class="glowing-avatar-ring">
+                <img src="https://i.imgur.com/yNfqYDj.png" alt="Ahmed Shaikh Saleem" class="profile-avatar">
+            </div>
+        </div>
+
+        <h1>Ahmed Shaikh Saleem</h1>
+        <p>Computer Science Enthusiast | Student Leader | Graphic Designer</p>
+        <a href="#about" class="uiverse-btn">Explore Portfolio</a>
+    </div>
+
+    <!-- About Me Section -->
+    <section id="about">
+        <div class="section-header">
+            <h2>About Me</h2>
+        </div>
+        <div class="uiverse-card">
+            <p>Hello! I am <strong>Ahmed Shaikh Saleem</strong>, currently in <strong>Year 11 (Class 11B1)</strong>. I am passionate about computer science, software engineering, and digital art/design, aiming to combine technical skill and creative strategy in the tech industry.</p>
+            <br>
+            <p>I am proficient in coding languages including <strong>HTML</strong> and <strong>SQL</strong>, and I am actively studying <strong>Python</strong> and database systems. Beyond coding, I serve in key student leadership roles and work on professional design and branding projects.</p>
+        </div>
+    </section>
+
+    <!-- Past Experience Section -->
+    <section id="experience">
+        <div class="section-header">
+            <h2>Past Experience & Education</h2>
+        </div>
+        
+        <div class="grid-2">
+            <div class="uiverse-card">
+                <h3>Experience & Leadership</h3>
+                <ul>
+                    <li><strong>Intern at Buymystock F.Z. L.L.C.</strong><br>Graphic/Art Designer & Social Media Manager of Buymystock F.Z. L.L.C.</li>
+                    <li><strong>Graphic/Art Designer — Snapkey™</strong><br>Designed key branding, visual assets, and accessories for the student enterprise during TWS Market Day.</li>
+                    <li><strong>Head of Islamic</strong><br>Year 11 Leadership Position at School. Led a team of student prefects to run school assemblies, charity drives, and cultural events. Acted as the main student voice to teachers while guiding and supporting younger year groups.</li>
+                    <li><strong>Assistant Head of Islamic</strong><br>Year 10 Leadership Position at School. Helped senior leaders organize school events, handle setup and logistics, and run fundraisers, building solid leadership and teamwork skills along the way.</li>
+                    <li><strong>Member — Commericum</strong><br>Member of the Student-Led Commerce Club "Commercium". Attended key events led by Commercium like: "To The Moon & Back" and Commercium's "Market Day" as Graphic/Art Designer for a Student Led-Enterprise Called "Snapkey™"</li>
+
+                </ul>
+            </div>
+
+            <!-- Custom Education Timeline Diagram -->
+            <div class="uiverse-card">
+                <h3>Education Timeline</h3>
+                
+                <div class="timeline-container">
+                    
+                    <div class="timeline-item right">
+                        <div class="timeline-year">2014</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">GEMS Winchester School</div>
+                            <div class="timeline-sub">Dubai, UAE (FS1 / Primary Start)</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item left">
+                        <div class="timeline-year">2020</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Graduated Primary</div>
+                            <div class="timeline-sub">GEMS Winchester School</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item right">
+                        <div class="timeline-year">2021</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">The Westminster School</div>
+                            <div class="timeline-sub">Dubai, UAE (Secondary Start)</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item left">
+                        <div class="timeline-year">Present</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Year 11 (Current)</div>
+                            <div class="timeline-sub">The Westminster School, Dubai</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements & Skills Section -->
+    <section id="achievements">
+        <div class="section-header">
+            <h2>Achievements & Skills</h2>
+        </div>
+
+        <div class="grid-2">
+            <div class="uiverse-card">
+                <h3>Certificates & Honors</h3>
+                <ul>
+                    <li>Star Pupil of the Month — Year 1</li>
+                    <li>Star Pupil of the Month — Year 2</li>
+                    <li>Star Pupil of the Month — Year 3</li>
+                    <li>Star Pupil of the Month — Year 4</li>
+                    <li>Star Student of the Month — Year 5</li>
+                    <li>Star Student of the Month — Year 6</li>                    
+                    <li>Form Tutor Recommendation — Year 7</li>
+                    <li>Form Tutor Recommendation — Year 8</li>
+                    <li>Assistant Head of Islamic — Year 10</li>
+                    <li>Head of Islamic — Year 11</li>
+                </ul>
+            </div>
+
+            <div class="uiverse-card">
+                <h3>Academics & Extracurriculars</h3>
+                <ul>
+                    <li><strong>Computer Science:</strong> Top Performance In Key Exams (Most Recent: 45/50).</li>
+                    <li><strong>Sports:</strong> Academy Football Player (Utility Player for Westford Sports) Known For Pace, Shot Accuracy & Tackles. Regularly Plays Badminton & Cricket.</li>
+                </ul>
+                <br>
+                <h3>Technical & Creative Skills</h3>
+                <div>
+                    <span class="skills-tag">Graphic Design</span>
+                    <span class="skills-tag">Social Media Management</span>
+                    <span class="skills-tag">HTML</span>
+                    <span class="skills-tag">Python</span>
+                    <span class="skills-tag">SQL</span>
+                    <span class="skills-tag">MS Access</span>
+                    <span class="skills-tag">MS Excel</span>
+                    <span class="skills-tag">Academy Player</span>
+                    <span class="skills-tag">Utility Player</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="section-header">
+            <h2>Get In Touch</h2>
+        </div>
+        <div class="uiverse-card" style="text-align: center;">
+            <p style="font-size: 1.1rem; margin-bottom: 15px;">Click below to copy my contact information directly!</p>
+            
+            <div class="contact-grid">
+                <div class="interactive-contact-btn" onclick="copyText('+971526998685', 'Phone number copied!')">
+                    Call Direct
+                    <span>+971 52 699 8685</span>
+                </div>
+                <div class="interactive-contact-btn" onclick="copyText('shsk40@gmail.com', 'Email address copied!')">
+                    Send Email
+                    <span>shsk40@gmail.com</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 	Created By Ahmed Shaikh Saleem.</p>
+    </footer>
+
+    <script>
+        // --- 1. Scroll Progress Bar ---
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("scroll-progress").style.width = scrolled + "%";
+        };
+
+        // --- 2. Dark / Light Theme Toggle ---
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('change', () => {
+            if (themeToggle.checked) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+        });
+
+        // --- 3. Copy to Clipboard Function ---
+        function copyText(text, message) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert(message);
+            });
+        }
+    </script>
+</body>
+</html>
